@@ -1,0 +1,31 @@
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access 1 weeks"
+ExpiresByType image/jpeg "access 1 weeks"
+ExpiresByType image/gif "access 1 weeks"
+ExpiresByType image/png "access 1 weeks"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+RewriteEngine On
+
+RewriteCond %{HTTP_HOST} =content.pouet.net
+RewriteRule ^screenshots\/(\d+)\.([a-z]{3,4}) screenshot_legacy.php?id=$1&ext=$2 [L]
+
+#RewriteCond %{HTTP_HOST} =pouet.net
+#RewriteCond %{HTTP_HOST} =www.pouet.net
+#RewriteRule ^screenshots\/(\d+)\.([a-z]{3,4}) screenshot_legacy.php?id=$1&ext=$2 [L]
+
+</IfModule>
+
+<FilesMatch "\.(ttf|otf|eot|woff|woff2)$">
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+
+  <IfModule mod_mime.c>
+    AddType font/opentype .otf
+  </IfModule>
+  
+</FilesMatch>
