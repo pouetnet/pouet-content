@@ -1,14 +1,19 @@
-<?
-$id = (int)$_GET["id"];
-$ext = $_GET["ext"];
-switch($ext)
-{
-  case "jpeg": 
-  case "jpg": header("Content-type: image/jpeg"); break;
-  case "png": header("Content-type: image/png"); break;
-  case "gif": header("Content-type: image/gif"); break;
-  default: exit();
+<?php
+// Serves the old /screenshots/<id>.<ext> URLs (see .htaccess). A prod has at
+// most one screenshot (uploads delete the other extensions), so serve
+// whichever exists, in www's find_screenshot() order: links with the wrong
+// extension, or .jpeg, still get the image
+$types = array("jpg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+$id = (int)($_GET["id"] ?? 0);
+if (in_array($_GET["ext"] ?? "", array("jpg", "jpeg", "gif", "png"))) {
+  foreach ($types as $ext => $type) {
+    $path = sprintf(__DIR__ . "/files/screenshots/%05d/%08d.%s", (int)($id / 1000), $id, $ext);
+    if (file_exists($path)) {
+      header("Content-Type: " . $type);
+      header("Last-Modified: " . gmdate("D, d M Y H:i:s", filemtime($path)) . " GMT");
+      readfile($path);
+      exit();
+    }
+  }
 }
-$newPath = sprintf("files/screenshots/%05d/%08d.%s",(int)($id/1000),$id,$ext);
-echo file_get_contents($newPath);
-?>
+http_response_code(404);
