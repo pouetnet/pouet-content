@@ -10,7 +10,6 @@ ExpiresByType image/png "access 1 weeks"
 
 RewriteEngine On
 
-RewriteCond %{HTTP_HOST} =content.pouet.net
 RewriteRule ^screenshots\/(\d+)\.([a-z]{3,4}) screenshot_legacy.php?id=$1&ext=$2 [L]
 
 #RewriteCond %{HTTP_HOST} =pouet.net
