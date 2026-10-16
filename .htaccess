@@ -10,6 +10,11 @@ ExpiresByType image/png "access 1 weeks"
 
 RewriteEngine On
 
+# No directory listings (avatars/, logos/...): the server turns them on, and
+# its AllowOverride refuses "Options -Indexes" here. The root keeps index.html
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^. - [F]
+
 RewriteRule ^screenshots\/(\d+)\.([a-z]{3,4}) screenshot_legacy.php?id=$1&ext=$2 [L]
 
 #RewriteCond %{HTTP_HOST} =pouet.net
