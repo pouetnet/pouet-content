@@ -26,8 +26,8 @@ just setup
 
 This clones this repo and the other site repos under `sites/`, starts
 everything and loads sample data, uploads included. Content is then on
-<http://localhost:8083>. pouet-infra's `ARCHITECTURE.md` describes how it
-runs in production.
+<http://content.pouet.localhost>. pouet-infra's `ARCHITECTURE.md`
+describes how it runs in production.
 
 ## Contributing
 
