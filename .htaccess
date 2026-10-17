@@ -33,3 +33,6 @@ RewriteRule ^screenshots\/(\d+)\.([a-z]{3,4}) screenshot_legacy.php?id=$1&ext=$2
   </IfModule>
   
 </FilesMatch>
+
+# Repo files, never served directly
+RedirectMatch 404 (?i)^/README\.md$
